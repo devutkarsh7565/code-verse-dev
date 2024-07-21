@@ -4,7 +4,7 @@ import TagSection from "./TagSection";
 
 const SnippetNavbar = () => {
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-4 w-full">
       <SnippetProfileAndSearchSection />
       <TagSection />
     </div>
