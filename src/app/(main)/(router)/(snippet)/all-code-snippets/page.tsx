@@ -1,6 +1,7 @@
 "use client";
 import FormControl from "@/app/components/FormComponents/FormControl";
-import SnippetSection from "@/app/components/SnippetSection/SnippetSection";
+import SnippetNotFound from "@/app/components/Snippet/SnippetSection/SnippetNotFound";
+import SnippetSection from "@/app/components/Snippet/SnippetSection/SnippetSection";
 import { DemoSchema, IDemoSchema } from "@/schemas/demoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
@@ -18,7 +19,7 @@ const AllCodeSnippet = () => {
   };
   return (
     <div className="w-full h-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      {/* <form onSubmit={handleSubmit(onSubmit)} className="form">
         <FormControl
           control="input"
           label="Name"
@@ -40,8 +41,9 @@ const AllCodeSnippet = () => {
         />
 
         <button type="submit">submit!</button>
-      </form>
-      <SnippetSection />
+      </form> */}
+      {/* <SnippetSection /> */}
+      <SnippetNotFound />
     </div>
   );
 };

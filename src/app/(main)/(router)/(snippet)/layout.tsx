@@ -1,4 +1,4 @@
-import SnippetNavbar from "@/app/components/SnippetNavbar/SnippetNavbar";
+import SnippetNavbar from "@/app/components/Snippet/SnippetNavbar/SnippetNavbar";
 import React from "react";
 
 const SnippetLayout = ({ children }: { children: React.ReactNode }) => {

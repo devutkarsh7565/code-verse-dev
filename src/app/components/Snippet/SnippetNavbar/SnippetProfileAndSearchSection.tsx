@@ -1,7 +1,7 @@
 import React from "react";
-import { DarkMode } from "../DarkMode/DarkMode";
+import { DarkMode } from "../../DarkMode/DarkMode";
 import Image from "next/image";
-import ProfileImg from "../../../../public/next.svg";
+import ProfileImg from "../../../../../public/next.svg";
 import {
   Bars3Icon,
   MagnifyingGlassIcon,
