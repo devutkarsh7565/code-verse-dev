@@ -1,5 +1,5 @@
 "use client";
-import { TrashIcon } from "@heroicons/react/16/solid";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -38,7 +38,7 @@ const SnippetCard = ({
       </p>
       <SyntaxHighlighter
         customStyle={{
-          height: "50%",
+          height: "55%",
           padding: "12px",
         }}
         language={language}
@@ -48,7 +48,7 @@ const SnippetCard = ({
       </SyntaxHighlighter>
       <div className="flex items-center justify-between px-3">
         <h3 className=" text-neutral-500">{language}</h3>
-        <TrashIcon className="w-5 h-5 text-neutral-400" />
+        <TrashIcon className="w-5 h-5 text-neutral-500" />
       </div>
     </div>
   );
