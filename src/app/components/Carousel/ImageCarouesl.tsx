@@ -85,14 +85,14 @@ const ImageCarouesl = ({
       )}
 
       {slides && slides[currentImg]?.text && (
-        <div className="flex justify-center z-40 bottom-20 absolute w-full text-2xl font-semibold">
-          <p className="text-center w-3/5  text-white ">
+        <div className="flex justify-center  text-white z-40 bottom-20 absolute w-full text-2xl font-semibold">
+          <p className="text-center w-3/4 p-3 rounded-md bg-black/30  text-white ">
             {slides[currentImg]?.text}
           </p>
         </div>
       )}
 
-      <div className="absolute w-full h-full bg-black/15 z-30"></div>
+      <div className="absolute w-full h-full bg-black/20 z-30"></div>
     </div>
   );
 };
