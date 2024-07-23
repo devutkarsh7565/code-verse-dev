@@ -28,7 +28,7 @@ const TagModal = ({ isOpen, close }: ITagModal) => {
     console.log(data, "data");
   };
 
-  const clearFormValues: SubmitHandler<ITagModalSchema> = () => {
+  const clearFormValues = () => {
     router.refresh();
     setValue("name", "");
   };
