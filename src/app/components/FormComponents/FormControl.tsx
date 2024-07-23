@@ -6,7 +6,14 @@ import TextArea from "./FieldComponents/TextArea";
 import SelectInput from "./FieldComponents/Select";
 
 type Props = {
-  control: string;
+  control:
+    | "input"
+    | "select"
+    | "textarea"
+    | "radio"
+    | "file"
+    | "checkbox"
+    | "date";
   label: string;
   name: string;
   type?: string;

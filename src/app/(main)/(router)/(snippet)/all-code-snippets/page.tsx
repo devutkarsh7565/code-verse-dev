@@ -42,8 +42,8 @@ const AllCodeSnippet = () => {
 
         <button type="submit">submit!</button>
       </form> */}
-      {/* <SnippetSection /> */}
-      <SnippetNotFound />
+      <SnippetSection />
+      {/* <SnippetNotFound /> */}
     </div>
   );
 };

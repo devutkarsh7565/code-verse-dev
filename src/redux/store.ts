@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "@/redux/features/demo";
+import allModalReducer from "@/redux/features/allModal";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    allModal: allModalReducer,
   },
 });
 
