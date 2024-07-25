@@ -14,7 +14,7 @@ type Props = {
     | "file"
     | "checkbox"
     | "date";
-  label: string;
+  label?: string;
   name: string;
   type?: string;
   placeholder: string;
@@ -26,6 +26,8 @@ type Props = {
   multiple?: boolean;
   error: FieldError | undefined;
   register: UseFormRegister<any>;
+  style?: "primary" | "secondary";
+  rows?: number;
 };
 
 const FormControl = (props: Props) => {

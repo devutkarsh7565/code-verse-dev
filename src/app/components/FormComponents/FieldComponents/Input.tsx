@@ -2,7 +2,7 @@ import React from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export type Props = {
-  label: string;
+  label?: string;
   name: string;
   placeholder: string;
   type?: string;
@@ -12,10 +12,13 @@ export type Props = {
     name: string;
     value: string;
   }[];
+  style?: "primary" | "secondary";
+  rows?: number;
 };
 
 const Input = (props: Props) => {
-  const { label, name, placeholder, type, register, error, ...rest } = props;
+  const { label, name, placeholder, type, register, error, style, ...rest } =
+    props;
   return (
     <div className="flex flex-col justify-start items-start gap-1 w-full">
       <label
