@@ -1,7 +1,12 @@
 import React from "react";
 import SnippetCard from "./SnippetCard";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const SnippetSection = () => {
+  const addSnippetState = useSelector(
+    (state: RootState) => state.addSnippet.addSnippet
+  );
   const snippetArray = [
     {
       title: "Swap Element in Array",
@@ -62,7 +67,11 @@ const SnippetSection = () => {
   ];
   return (
     <>
-      <div className="grid grid-cols-3 gap-5 w-full h-full">
+      <div
+        className={`grid ${
+          addSnippetState ? "grid-cols-1 w-1/2" : "grid-cols-3 w-full"
+        }  gap-5  h-full`}
+      >
         {snippetArray.map((snippet) => (
           <SnippetCard
             key={snippet.title}

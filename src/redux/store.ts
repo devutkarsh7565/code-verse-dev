@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "@/redux/features/demo";
 import allModalReducer from "@/redux/features/allModal";
+import addSnippetReducer from "@/redux/features/addSnippet";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     allModal: allModalReducer,
+    addSnippet: addSnippetReducer,
   },
 });
 

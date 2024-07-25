@@ -5,9 +5,30 @@ import { ILoginSchema, loginSchema } from "@/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ISignupSchema, signupSchema } from "@/schemas/signupSchema";
+import { useRegister } from "@/hooks/useRegister";
+import { useUserLoggedIn } from "@/hooks/useUserLoggedIn";
+import { useRouter } from "next/navigation";
 
 const LoginAndSignup = () => {
   const [isLoginComponent, setIsLoginComponent] = useState<boolean>(true);
+
+  const router = useRouter();
+  const {
+    registerMutate,
+    isErrorRegister,
+    isLoadingRegister,
+    isSuccessRegister,
+    registerData,
+  } = useRegister();
+
+  const {
+    isErrorLoggedIn,
+    isLoadingLoggedIn,
+    isSuccessLoggedIn,
+    loggedInMutate,
+    loggedInData,
+  } = useUserLoggedIn();
+
   const loginForm = useForm<ILoginSchema>({
     resolver: zodResolver(loginSchema),
   });
@@ -16,13 +37,17 @@ const LoginAndSignup = () => {
     resolver: zodResolver(signupSchema),
   });
 
-  const onLogin: SubmitHandler<ILoginSchema> = (data: ILoginSchema) => {
+  const onLogin: SubmitHandler<ILoginSchema> = async (data: ILoginSchema) => {
     console.log(data, "login");
+    loggedInMutate(data);
   };
 
-  const onSignup: SubmitHandler<ISignupSchema> = (data: ISignupSchema) => {
+  const onSignup: SubmitHandler<ISignupSchema> = async (data) => {
     console.log(data, "signup");
+    await registerMutate(data);
   };
+
+  console.log(registerData, "registerData");
   if (isLoginComponent) {
     return (
       <>
@@ -120,7 +145,7 @@ const LoginAndSignup = () => {
               <h4>or</h4>
               <div className="w-[46%] border border-neutral-200"></div>
             </div>
-            <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-3 w-full">
               <FormControl
                 register={signupForm.register}
                 label="Name"
@@ -158,10 +183,11 @@ const LoginAndSignup = () => {
               </div>
 
               <button
+                disabled={isLoadingRegister}
                 type="submit"
                 className="text-sm bg-black border border-black hover:border-black text-white p-2 rounded-lg w-full hover:bg-neutral-800 duration-300 hover:text-neutral-100"
               >
-                Log in
+                Sign Up
               </button>
 
               <div className="flex items-center w-full justify-center text-sm text-neutral-500">
@@ -170,7 +196,7 @@ const LoginAndSignup = () => {
                   onClick={() => setIsLoginComponent(true)}
                   className="text-green-600 ml-1 cursor-pointer hover:underline duration-300"
                 >
-                  Log in
+                  Sign in
                 </span>
               </div>
             </div>
