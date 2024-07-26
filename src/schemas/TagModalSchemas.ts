@@ -4,7 +4,7 @@ export const tagModalSchema = z
     name: z
       .string()
       .min(3, "Name must be at least 3 characters")
-      .max(10, "Name must be at most 10 characters"),
+      .max(30, "Name must be at most 30 characters"),
   })
   .required();
 

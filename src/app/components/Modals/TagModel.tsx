@@ -4,9 +4,12 @@ import React from "react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ITagModalSchema, tagModalSchema } from "@/schemas/modalSchemas";
+import { ITagModalSchema, tagModalSchema } from "@/schemas/TagModalSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormControl from "../FormComponents/FormControl";
+import { useTags } from "@/hooks/useTags";
+import { useDispatch } from "react-redux";
+import { tagModalClose } from "@/redux/features/allModal";
 
 interface ITagModal {
   isOpen: boolean;
@@ -16,6 +19,14 @@ interface ITagModal {
 const TagModal = ({ isOpen, close }: ITagModal) => {
   const params = useParams();
   const router = useRouter();
+  const {
+    createTagsMutate,
+    isLoadingCreateTags,
+    isErrorCreateTags,
+    isSuccessCreateTags,
+  } = useTags();
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -26,6 +37,8 @@ const TagModal = ({ isOpen, close }: ITagModal) => {
 
   const onSubmit: SubmitHandler<ITagModalSchema> = (data) => {
     console.log(data, "data");
+    createTagsMutate(data);
+    setValue("name", "");
   };
 
   const clearFormValues = () => {
@@ -85,6 +98,7 @@ const TagModal = ({ isOpen, close }: ITagModal) => {
                     />
                     <div className="flex justify-end gap-2 items-center w-full">
                       <button
+                        disabled={isLoadingCreateTags}
                         onClick={clearFormValues}
                         type="button"
                         className="px-4 py-2 text-xs text-neutral-500 font-medium bg-transparent rounded-md border border-neutral-200 shadow-sm"
@@ -92,8 +106,11 @@ const TagModal = ({ isOpen, close }: ITagModal) => {
                         Cancel
                       </button>
                       <button
+                        disabled={isLoadingCreateTags}
                         type="submit"
-                        className="px-4 py-2 text-xs text-purple-50 font-medium bg-purple-500 rounded-md"
+                        className={`px-4 py-2 text-xs text-purple-50 font-medium ${
+                          isLoadingCreateTags ? "opacity-30" : ""
+                        } bg-purple-500 rounded-md`}
                       >
                         Add Tag
                       </button>

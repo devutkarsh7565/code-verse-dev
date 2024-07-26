@@ -1,5 +1,10 @@
 import React from "react";
-import { FieldError, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 
 export type Props = {
   label?: string;
@@ -8,6 +13,7 @@ export type Props = {
   type?: string;
   error: FieldError | undefined;
   register: UseFormRegister<any>;
+  setValue?: UseFormSetValue<FieldValues>;
   selectOptions?: {
     name: string;
     value: string;

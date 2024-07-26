@@ -1,9 +1,15 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import FileInput from "./FieldComponents/FileInput";
 import Input from "./FieldComponents/Input";
 import RadioInput from "./FieldComponents/RadioInput";
 import TextArea from "./FieldComponents/TextArea";
 import SelectInput from "./FieldComponents/Select";
+import MultiSelectInput from "./FieldComponents/MultiSelect";
 
 type Props = {
   control:
@@ -13,12 +19,18 @@ type Props = {
     | "radio"
     | "file"
     | "checkbox"
-    | "date";
+    | "date"
+    | "multiSelect";
+
   label?: string;
   name: string;
   type?: string;
   placeholder: string;
-  options?: any;
+  selectOptions?: {
+    name: string;
+    value: string;
+  }[];
+  setValue?: UseFormSetValue<any>;
   onChange?: (e: any) => void;
   value?: any;
   accept?: any;
@@ -43,6 +55,8 @@ const FormControl = (props: Props) => {
       return <RadioInput {...rest} />;
     case "file":
       return <FileInput {...rest} />;
+    case "multiSelect":
+      return <MultiSelectInput {...rest} />;
     case "checkbox":
     case "date":
     default:

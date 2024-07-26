@@ -12,7 +12,7 @@ const SelectInput = (props: Props) => {
         </label>
         <Select
           {...register(name)}
-          className={`bg-neutral-100 outline-none cursor-pointer dark:bg-neutral-800 px-3 py-2 rounded-md w-full`}
+          className={`bg-white border border-neutral-300 text-neutral-800 outline-none cursor-pointer dark:bg-neutral-800 pl-2 pr-4 py-2 rounded-md w-full`}
           aria-label="Project status"
         >
           {selectOptions?.map((option) => (

@@ -10,7 +10,7 @@ export const snippetSchema = z.object({
     .min(10, "Description must be at least 10 characters")
     .max(1000, "Description must be at most 1000 characters"),
   tags: z.array(z.string()).min(1, "Tags must be at least 1 "),
-  language: z.enum(["javascript"]),
+  language: z.string(),
   code: z.string().min(10, "Code must be at least 10 characters"),
 });
 

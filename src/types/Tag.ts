@@ -10,3 +10,7 @@ export interface Tag {
   updatedAt: string;
   __v: number;
 }
+
+export interface ICreateRequestBody {
+  name: string;
+}
