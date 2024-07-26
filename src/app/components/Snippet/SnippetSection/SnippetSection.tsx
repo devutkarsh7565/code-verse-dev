@@ -1,12 +1,20 @@
+"use client";
 import React from "react";
 import SnippetCard from "./SnippetCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useCodeSnippet } from "@/hooks/useCodeSnippet";
 
 const SnippetSection = () => {
   const addSnippetState = useSelector(
     (state: RootState) => state.addSnippet.addSnippet
   );
+
+  const {
+    isErrorCodeSnippetByCurrentUserId,
+    isLoadingCodeSnippetByCurrentUserId,
+    codeSnippetByCurrentUserId,
+  } = useCodeSnippet();
   const snippetArray = [
     {
       title: "Swap Element in Array",
@@ -65,6 +73,8 @@ const SnippetSection = () => {
       tag: "Array",
     },
   ];
+
+  console.log(codeSnippetByCurrentUserId, "code snippet");
   return (
     <>
       <div
@@ -72,16 +82,18 @@ const SnippetSection = () => {
           addSnippetState ? "grid-cols-1 w-1/2" : "grid-cols-3 w-full"
         }  gap-5  h-full`}
       >
-        {snippetArray.map((snippet) => (
-          <SnippetCard
-            key={snippet.title}
-            title={snippet.title}
-            description={snippet.description}
-            code={snippet.code}
-            language={snippet.language}
-            tag={snippet.tag}
-          />
-        ))}
+        {codeSnippetByCurrentUserId?.data?.codeSnippetsWithTags?.map(
+          (snippet) => (
+            <SnippetCard
+              key={snippet.title}
+              title={snippet.title}
+              description={snippet.description}
+              code={snippet.code}
+              language={snippet.language}
+              tags={snippet.tags}
+            />
+          )
+        )}
       </div>
     </>
   );

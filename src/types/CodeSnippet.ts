@@ -1,5 +1,5 @@
 export interface ICodeSnippet {
-  codeSnippets: CodeSnippet[];
+  codeSnippetsWithTags: CodeSnippet[];
 }
 
 export interface CodeSnippet {

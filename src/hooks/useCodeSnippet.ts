@@ -1,6 +1,6 @@
 "use client";
+import { ICodeSnippet } from "@/types/CodeSnippet";
 import { API_ENDPOINT } from "@/types/RegisterUserTypes";
-import { ITags } from "@/types/Tag";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 
@@ -21,16 +21,19 @@ export const useCodeSnippet = () => {
 };
 
 const getCodeSnippetByCurrentUserId = async (): Promise<
-  AxiosResponse<ITags>
+  AxiosResponse<ICodeSnippet>
 > => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken") || "{}");
-  const response = await axios.get<ITags>(`${API_ENDPOINT}/tags`, {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await axios.get<ICodeSnippet>(
+    `${API_ENDPOINT}/code-snippets`,
+    {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   return response;
 };

@@ -11,14 +11,14 @@ interface ISnippetCard {
   description: string;
   code: string;
   language: string;
-  tag: string;
+  tags: string[];
 }
 
 const SnippetCard = ({
   code,
   description,
   language,
-  tag,
+  tags,
   title,
 }: ISnippetCard) => {
   return (
@@ -29,9 +29,16 @@ const SnippetCard = ({
       </div>
       <div className=" px-3">
         <p className="mb-3 text-sm text-neutral-500">Jun 6</p>
-        <button className="py-2 px-4 rounded-md text-xs font-medium text-purple-500 bg-purple-50">
-          {tag}
-        </button>
+        <div className="flex items-center gap-2">
+          {tags?.map((tag) => (
+            <button
+              key={tag}
+              className="py-2 px-4 rounded-md text-xs font-medium text-purple-500 bg-purple-50"
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </div>
       <p className="text-sm px-3 text-neutral-500 line-clamp-3 h-16">
         {description}
