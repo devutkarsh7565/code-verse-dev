@@ -1,6 +1,7 @@
 "use client";
 import { ILoginSchema } from "@/schemas/loginSchema";
 import { LoggedInUserResponse } from "@/types/LoggedInUserTypes";
+import { API_ENDPOINT } from "@/types/RegisterUserTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
@@ -29,7 +30,7 @@ export const useUserLoggedIn = () => {
   };
 };
 
-const API_URL = "http://localhost:4000/api/v1/users/login/";
+const API_URL = `${API_ENDPOINT}/users/login/`;
 
 export const userLoggedIn = async (
   userData: ILoginSchema

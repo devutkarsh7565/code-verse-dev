@@ -1,6 +1,6 @@
 "use client";
 import { ISignupSchema } from "@/schemas/signupSchema";
-import { RegisterUserResponse } from "@/types/RegisterUserTypes";
+import { API_ENDPOINT, RegisterUserResponse } from "@/types/RegisterUserTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 
@@ -24,7 +24,7 @@ export const useRegister = () => {
   };
 };
 
-const API_URL = "http://localhost:4000/api/v1/users/register/";
+const API_URL = `${API_ENDPOINT}/users/register/`;
 
 export const registerUser = async (
   userData: ISignupSchema

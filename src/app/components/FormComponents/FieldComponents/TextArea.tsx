@@ -29,7 +29,7 @@ const TextArea = (props: Props) => {
           {...register(name)}
           {...rest}
           placeholder={placeholder}
-          className="border bg-transparent border-neutral-300 focus:border-neutral-200 rounded-md  py-2 text-sm font-normal px-3 w-full outline-none "
+          className="border text-neutral-800 bg-transparent border-neutral-300 focus:border-neutral-200 rounded-md  py-2 text-sm font-normal px-3 w-full outline-none "
         />
         {error && (
           <p className="text-red-500 text-xs font-medium tracking-wide">

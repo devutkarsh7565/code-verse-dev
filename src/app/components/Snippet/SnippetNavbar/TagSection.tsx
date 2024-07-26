@@ -5,6 +5,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TagModal from "../../Modals/TagModel";
+import { useTags } from "@/hooks/useTags";
 
 const TagSection = () => {
   const dispatch = useDispatch();
@@ -12,35 +13,24 @@ const TagSection = () => {
     (state: RootState) => state.allModal.tagModal
   );
   const [selectedTag, setSelectedTag] = useState<string>("All");
-  const tagArray = [
+  const {
+    isErrorTagsByCurrentUserId,
+    isLoadingTagsByCurrentUserId,
+    tagsByCurrentUserId,
+  } = useTags();
+
+  const tags =
+    tagsByCurrentUserId?.data?.tags?.map((tag) => ({
+      id: tag._id,
+      name: tag.name,
+    })) || [];
+
+  const tagArray: { id: string; name: string }[] = [
     {
-      id: 1,
+      id: "1",
       name: "All",
     },
-    {
-      id: 2,
-      name: "Filter Function Exercises",
-    },
-    {
-      id: 3,
-      name: "API Methods",
-    },
-    {
-      id: 4,
-      name: "Javascript Functions",
-    },
-    {
-      id: 5,
-      name: "React Js",
-    },
-    {
-      id: 6,
-      name: "Reduce Functions",
-    },
-    {
-      id: 7,
-      name: "React Hooks",
-    },
+    ...tags,
   ];
 
   const onClose = () => {
@@ -50,19 +40,34 @@ const TagSection = () => {
     <>
       <div className="flex items-center p-2 bg-white rounded-lg justify-between w-full">
         <div className="flex gap-3 items-center w-[90%]">
-          {tagArray?.map((item, index) => (
-            <button
-              onClick={() => setSelectedTag(item?.name)}
-              key={index}
-              className={`p-2 rounded-md ${
-                selectedTag === item?.name
-                  ? "bg-purple-500 text-white"
-                  : "text-neutral-500"
-              }  flex items-center gap-1 text-xs`}
-            >
-              <p className="text-xs  font-medium tracking-wide">{item?.name}</p>
-            </button>
-          ))}
+          {tagArray?.map((item, index) =>
+            isLoadingTagsByCurrentUserId ? (
+              <>
+                <div className="flex gap-3 items-center">
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                  <h1 className="h-7 w-10 rounded-md bg-neutral-200 animate-pulse"></h1>
+                </div>
+              </>
+            ) : (
+              <button
+                onClick={() => setSelectedTag(item?.name)}
+                key={index}
+                className={`p-2 rounded-md ${
+                  selectedTag === item?.name
+                    ? "bg-purple-500 text-white"
+                    : "text-neutral-500"
+                }  flex items-center gap-1 text-xs`}
+              >
+                <p className="text-xs  font-medium tracking-wide">
+                  {item?.name}
+                </p>
+              </button>
+            )
+          )}
         </div>
         <button
           onClick={() => dispatch(tagModalOpen())}
