@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { addSnippetContainerClose } from "@/redux/features/addSnippet";
 import { useTags } from "@/hooks/useTags";
 import CodeEditor from "@uiw/react-textarea-code-editor";
+import { useCodeSnippet } from "@/hooks/useCodeSnippet";
 
 const CreateSnippet = () => {
   const {
@@ -21,6 +22,9 @@ const CreateSnippet = () => {
     isLoadingTagsByCurrentUserId,
     isErrorTagsByCurrentUserId,
   } = useTags();
+
+  const { createCodeSnippetMutate, isLoadingCreateCodeSnippet } =
+    useCodeSnippet();
   const {
     register,
     handleSubmit,
@@ -58,6 +62,7 @@ const CreateSnippet = () => {
 
   const onSubmit: SubmitHandler<ISnippetSchema> = (data: ISnippetSchema) => {
     console.log(data, "data code snippet create");
+    createCodeSnippetMutate(data);
   };
   return (
     <div className="bg-white min-h-screen w-3/5 rounded-md p-4 flex flex-col gap-5 ">
@@ -173,6 +178,7 @@ const CreateSnippet = () => {
         <div className="flex w-full justify-end p-3">
           <button
             type="submit"
+            disabled={isLoadingCreateCodeSnippet}
             className="px-3 py-2 font-medium tracking-wide text-sm bg-purple-500 text-purple-50 hover:bg-white border hover:border-purple-500 hover:text-purple-500 focus:border-purple-500 duration-300 rounded-lg"
           >
             Create
