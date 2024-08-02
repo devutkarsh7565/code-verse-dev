@@ -23,8 +23,11 @@ const CreateSnippet = () => {
     isErrorTagsByCurrentUserId,
   } = useTags();
 
-  const { createCodeSnippetMutate, isLoadingCreateCodeSnippet } =
-    useCodeSnippet();
+  const {
+    createCodeSnippetMutate,
+    isLoadingCreateCodeSnippet,
+    codeSnippetByCurrentUserId,
+  } = useCodeSnippet();
   const {
     register,
     handleSubmit,
@@ -43,20 +46,6 @@ const CreateSnippet = () => {
   });
 
   const dispatch = useDispatch();
-
-  const language = watch("language");
-
-  console.log(
-    watch("tags"),
-    "tags",
-
-    watch("title"),
-    "title",
-    watch("description"),
-    "description",
-    watch("language"),
-    "language"
-  );
 
   console.log(watch("code"), "code");
 
@@ -78,7 +67,10 @@ const CreateSnippet = () => {
           <XMarkIcon className="w-5 h-5 text-neutral-400" />
         </button>
       </div>
-      <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="flex flex-col gap-5 h-full"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="flex  gap-3">
           <h3 className="text-4xl mt-1 font-medium text-purple-500">T</h3>
           <FormControl
@@ -123,7 +115,7 @@ const CreateSnippet = () => {
 
         <div className="flex gap-3 h-full">
           <CodeBracketIcon className="w-6 mt-2 h-6 text-neutral-400" />
-          <div className="flex flex-col w-full gap-1">
+          <div className="flex flex-col h-full w-full gap-1">
             <div className="flex h-full flex-col gap-2 w-full border border-neutral-300 rounded-md p-3">
               <div className="flex justify-between w-full items-center">
                 <FormControl
@@ -143,7 +135,14 @@ const CreateSnippet = () => {
                 />
                 <DocumentDuplicateIcon className="w-5 h-5 text-neutral-400" />
               </div>
-              <div className="flex flex-col w-full">
+              <div
+                className={`flex flex-col w-full ${
+                  (codeSnippetByCurrentUserId?.data?.codeSnippetsWithTags
+                    ?.length as number) > 2
+                    ? "h-full"
+                    : "h-[25rem]"
+                }`}
+              >
                 <CodeEditor
                   {...register("code")}
                   data-color-mode="light"
@@ -159,7 +158,12 @@ const CreateSnippet = () => {
                     fontFamily:
                       "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
                   }}
-                  className="w-full h-[25rem]  rounded-xl mb-3"
+                  className={`w-full ${
+                    (codeSnippetByCurrentUserId?.data?.codeSnippetsWithTags
+                      ?.length as number) > 2
+                      ? "h-full"
+                      : "h-[25rem]"
+                  }   rounded-xl mb-3`}
                 />
               </div>
             </div>
@@ -179,7 +183,9 @@ const CreateSnippet = () => {
           <button
             type="submit"
             disabled={isLoadingCreateCodeSnippet}
-            className="px-3 py-2 font-medium tracking-wide text-sm bg-purple-500 text-purple-50 hover:bg-white border hover:border-purple-500 hover:text-purple-500 focus:border-purple-500 duration-300 rounded-lg"
+            className={`px-3 py-2 font-medium ${
+              isLoadingCreateCodeSnippet ? "opacity-30" : ""
+            } tracking-wide text-sm bg-purple-500 text-purple-50 hover:bg-white border hover:border-purple-500 hover:text-purple-500 focus:border-purple-500 duration-300 rounded-lg`}
           >
             Create
           </button>

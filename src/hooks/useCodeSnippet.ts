@@ -1,6 +1,11 @@
 "use client";
+import { queryClient } from "@/Provider/ReactQueryProvider";
 import { ISnippetSchema } from "@/schemas/snippetSchema";
-import { CodeSnippet, ICodeSnippet } from "@/types/CodeSnippet";
+import {
+  CodeSnippet,
+  ICodeSnippet,
+  ICodeSnippetDelete,
+} from "@/types/CodeSnippet";
 import { API_ENDPOINT } from "@/types/RegisterUserTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
@@ -23,7 +28,27 @@ export const useCodeSnippet = () => {
   } = useMutation({
     mutationKey: ["create-code-snippet"],
     mutationFn: createCodeSnippet,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: ["code-snippet"],
+      });
+    },
+    onSuccess: () => {},
+  });
 
+  const {
+    isError: isErrorDeleteCodeSnippet,
+    isPending: isLoadingDeleteCodeSnippet,
+    mutate: deleteCodeSnippetMutate,
+    isSuccess: isSuccessDeleteCodeSnippet,
+  } = useMutation({
+    mutationKey: ["delete-code-snippet"],
+    mutationFn: deleteCodeSnippet,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: ["code-snippet"],
+      });
+    },
     onSuccess: () => {},
   });
   return {
@@ -34,6 +59,10 @@ export const useCodeSnippet = () => {
     isLoadingCreateCodeSnippet,
     createCodeSnippetMutate,
     isSuccessCreateCodeSnippet,
+    isErrorDeleteCodeSnippet,
+    isLoadingDeleteCodeSnippet,
+    deleteCodeSnippetMutate,
+    isSuccessDeleteCodeSnippet,
   };
 };
 
@@ -44,6 +73,25 @@ const createCodeSnippet = async (
   const response = await axios.post<CodeSnippet>(
     `${API_ENDPOINT}/code-snippets/create`,
     data,
+    {
+      withCredentials: true,
+
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response;
+};
+
+const deleteCodeSnippet = async (
+  id: string
+): Promise<AxiosResponse<ICodeSnippetDelete>> => {
+  const accessToken = JSON.parse(localStorage.getItem("accessToken") || "{}");
+  const response = await axios.delete<ICodeSnippetDelete>(
+    `${API_ENDPOINT}/code-snippets/${id}`,
+
     {
       withCredentials: true,
 

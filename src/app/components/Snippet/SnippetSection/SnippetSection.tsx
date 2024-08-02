@@ -91,6 +91,7 @@ const SnippetSection = () => {
               code={snippet.code}
               language={snippet.language}
               tags={snippet.tags}
+              id={snippet._id}
             />
           )
         )}

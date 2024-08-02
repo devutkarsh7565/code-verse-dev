@@ -15,3 +15,8 @@ export interface CodeSnippet {
   updatedAt: string;
   __v: number;
 }
+
+export interface ICodeSnippetDelete {
+  success: boolean;
+  message: string;
+}

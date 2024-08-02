@@ -1,4 +1,5 @@
 "use client";
+import { useCodeSnippet } from "@/hooks/useCodeSnippet";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BookmarkIcon } from "@heroicons/react/24/outline";
 import React from "react";
@@ -12,6 +13,7 @@ interface ISnippetCard {
   code: string;
   language: string;
   tags: string[];
+  id: string;
 }
 
 const SnippetCard = ({
@@ -20,7 +22,10 @@ const SnippetCard = ({
   language,
   tags,
   title,
+  id,
 }: ISnippetCard) => {
+  const { deleteCodeSnippetMutate, isLoadingDeleteCodeSnippet } =
+    useCodeSnippet();
   return (
     <div className=" rounded-md h-[30rem] flex flex-col gap-3 bg-white py-5 ">
       <div className="flex items-center justify-between px-3">
@@ -55,7 +60,18 @@ const SnippetCard = ({
       </SyntaxHighlighter>
       <div className="flex items-center justify-between px-3">
         <h3 className=" text-neutral-500">{language}</h3>
-        <TrashIcon className="w-5 h-5 text-neutral-500" />
+        <button
+          disabled={isLoadingDeleteCodeSnippet}
+          onClick={() => deleteCodeSnippetMutate(id)}
+          className="hover:text-red-500"
+        >
+          {" "}
+          <TrashIcon
+            className={`w-5 ${
+              isLoadingDeleteCodeSnippet ? "opacity-50" : ""
+            } h-5 text-neutral-500 hover:text-red-500`}
+          />
+        </button>
       </div>
     </div>
   );
