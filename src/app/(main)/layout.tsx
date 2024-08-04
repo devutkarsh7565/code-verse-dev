@@ -4,6 +4,7 @@ import "../globals.css";
 import StoreProvider from "@/Provider/StoreProvider";
 import ReactQueryProvider from "@/Provider/ReactQueryProvider";
 import axios from "axios";
+import CustomToaster from "../components/Toast/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <ReactQueryProvider>
         <html lang="en">
           <body className={inter.className}>
+            <CustomToaster />
             <div className="min-h-screen bg-white">{children}</div>
           </body>
         </html>

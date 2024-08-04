@@ -1,5 +1,6 @@
 "use client";
 import { queryClient } from "@/Provider/ReactQueryProvider";
+import { addSnippetContainerClose } from "@/redux/features/addSnippet";
 import { ISnippetSchema } from "@/schemas/snippetSchema";
 import {
   CodeSnippet,
@@ -9,8 +10,11 @@ import {
 import { API_ENDPOINT } from "@/types/RegisterUserTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 export const useCodeSnippet = () => {
+  const dispatch = useDispatch();
   const {
     isError: isErrorCodeSnippetByCurrentUserId,
     isLoading: isLoadingCodeSnippetByCurrentUserId,
@@ -33,7 +37,13 @@ export const useCodeSnippet = () => {
         queryKey: ["code-snippet"],
       });
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      dispatch(addSnippetContainerClose());
+      toast.success("Snippet created successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   const {
@@ -49,7 +59,12 @@ export const useCodeSnippet = () => {
         queryKey: ["code-snippet"],
       });
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      toast.success("Snippet deleted successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
   return {
     isErrorCodeSnippetByCurrentUserId,
