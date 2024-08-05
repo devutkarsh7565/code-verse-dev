@@ -27,7 +27,7 @@ const SnippetCard = ({
   const { deleteCodeSnippetMutate, isLoadingDeleteCodeSnippet } =
     useCodeSnippet();
   return (
-    <div className=" rounded-md h-[30rem] flex flex-col gap-3 bg-white py-5 ">
+    <div className=" rounded-md h-[30rem] flex flex-col gap-3 bg-white text-black py-5 ">
       <div className="flex items-center justify-between px-3">
         <h1 className="text-lg font-medium tracking-wide">{title}</h1>
         <BookmarkIcon className="w-5 h-5 text-neutral-500" />
@@ -78,3 +78,37 @@ const SnippetCard = ({
 };
 
 export default SnippetCard;
+
+export const SnippetCardSkeleton = () => {
+  return (
+    <div className=" rounded-md h-[30rem] border border-neutral-200 flex flex-col gap-3 bg-neutral-100 animate-pulse py-5 ">
+      <div className="flex items-center justify-between px-3">
+        <h1 className="text-lg w-24 h-8 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"></h1>
+        <BookmarkIcon className="w-5 h-5 text-neutral-300" />
+      </div>
+      <div className="flex flex-col gap-3 px-3">
+        <h1 className="text-lg w-16 h-6 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"></h1>
+        <div className="flex items-center gap-2">
+          <button
+            className="text-lg w-14 h-8 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"
+            disabled
+          ></button>
+          <button
+            className="text-lg w-14 h-8 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"
+            disabled
+          ></button>
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          <h1 className="text-lg w-full h-4 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"></h1>
+          <h1 className="text-lg w-full h-4 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"></h1>
+          <h1 className="text-lg w-[80%] h-4 animate-pulse bg-neutral-300 rounded-lg font-medium tracking-wide"></h1>
+        </div>
+        <div className="w-full h-52 animate-pulse rounded-lg bg-neutral-300"></div>
+        <div className="flex items-center justify-between ">
+          <h1 className="text-lg w-16 h-6 animate-pulse bg-neutral-300 rounded-sm font-medium tracking-wide"></h1>
+          <h1 className="text-lg w-16 h-6 animate-pulse bg-neutral-300 rounded-sm font-medium tracking-wide"></h1>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -13,16 +13,19 @@ import axios, { AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
-export const useCodeSnippet = () => {
+export const useCodeSnippet = (searchSnippet?: string, tagId?: string) => {
   const dispatch = useDispatch();
   const {
     isError: isErrorCodeSnippetByCurrentUserId,
     isLoading: isLoadingCodeSnippetByCurrentUserId,
     data: codeSnippetByCurrentUserId,
   } = useQuery({
-    queryKey: ["code-snippet"],
-    queryFn: getCodeSnippetByCurrentUserId,
+    queryKey: ["code-snippet", searchSnippet, tagId],
+    queryFn: () =>
+      getCodeSnippetByCurrentUserId(searchSnippet || "", tagId || ""),
   });
+
+  //search code snippet
 
   const {
     isError: isErrorCreateCodeSnippet,
@@ -136,12 +139,13 @@ const deleteCodeSnippet = async (
 //   );
 //   return response;
 // };
-const getCodeSnippetByCurrentUserId = async (): Promise<
-  AxiosResponse<ICodeSnippet>
-> => {
+export const getCodeSnippetByCurrentUserId = async (
+  searchDebounce: string,
+  tagId: string
+): Promise<AxiosResponse<ICodeSnippet>> => {
   const accessToken = JSON.parse(localStorage.getItem("accessToken") || "{}");
   const response = await axios.get<ICodeSnippet>(
-    `${API_ENDPOINT}/code-snippets`,
+    `${API_ENDPOINT}/code-snippets?title=${searchDebounce}&&tag=${tagId}`,
     {
       withCredentials: true,
       headers: {

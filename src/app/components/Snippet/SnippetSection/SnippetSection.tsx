@@ -1,80 +1,51 @@
 "use client";
 import React from "react";
-import SnippetCard from "./SnippetCard";
+import SnippetCard, { SnippetCardSkeleton } from "./SnippetCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useCodeSnippet } from "@/hooks/useCodeSnippet";
+import { useDebouncing } from "@/hooks/useDebouncing";
+import SnippetNotFound from "./SnippetNotFound";
 
 const SnippetSection = () => {
   const addSnippetState = useSelector(
     (state: RootState) => state.addSnippet.addSnippet
   );
 
+  const search = useSelector(
+    (state: RootState) => state.searchSnippet.searchSnippet
+  );
+
+  const filterSnippetByTagId = useSelector(
+    (state: RootState) => state.searchSnippet.filterSnippetByTag
+  );
+
+  const searchDebounce = useDebouncing(search, 500);
+
   const {
     isErrorCodeSnippetByCurrentUserId,
     isLoadingCodeSnippetByCurrentUserId,
     codeSnippetByCurrentUserId,
-  } = useCodeSnippet();
-  const snippetArray = [
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.This Function swaps the element at index i with the element at index j in an array.This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-    {
-      title: "Swap Element in Array",
-      description:
-        "This Function swaps the element at index i with the element at index j in an array.",
-      code: "swap(arr, i, j) {\n\tlet temp = arr[i];\n\tarr[i] = arr[j];\n\tarr[j] = temp;\n}",
-      language: "javascript",
-      tag: "Array",
-    },
-  ];
+  } = useCodeSnippet(searchDebounce, filterSnippetByTagId);
 
   console.log(codeSnippetByCurrentUserId, "code snippet");
+
+  if (isLoadingCodeSnippetByCurrentUserId) {
+    return (
+      <div className="grid grid-cols-3 w-full gap-5 h-full">
+        <SnippetCardSkeleton />
+        <SnippetCardSkeleton />
+        <SnippetCardSkeleton />
+      </div>
+    );
+  }
+  if (isErrorCodeSnippetByCurrentUserId) {
+    return (
+      <>
+        <SnippetNotFound />
+      </>
+    );
+  }
   return (
     <>
       <div

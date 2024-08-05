@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { DarkMode } from "../../DarkMode/DarkMode";
 import Image from "next/image";
 import ProfileImg from "../../../../../public/next.svg";
@@ -9,14 +9,20 @@ import {
   PlusIcon,
 } from "@heroicons/react/24/outline";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addSnippetContainerOpen } from "@/redux/features/addSnippet";
+
+import { RootState } from "@/redux/store";
+import { setSearchSnippet } from "@/redux/features/searchSnippet";
 
 const SnippetProfileAndSearchSection = () => {
   const { currentUser, isErrorCurrentUser, isLoadingCurrentUser } =
     useCurrentUser();
-
   const dispatch = useDispatch();
+  const search = useSelector(
+    (state: RootState) => state.searchSnippet.searchSnippet
+  );
+
   return (
     <div className="flex items-center p-2 bg-white rounded-lg justify-between">
       <div className="flex items-center gap-2">
@@ -50,12 +56,14 @@ const SnippetProfileAndSearchSection = () => {
         )}
       </div>
       <div className="flex items-center justify-between rounded-full p-1 bg-slate-100 w-1/2">
-        <div className="flex items-center gap-2 pl-2">
+        <div className="flex items-center gap-2 pl-2 text-black">
           <MagnifyingGlassIcon className="w-5 h-5 text-purple-500" />
           <input
             type="text"
             placeholder="Search"
-            className="w-full bg-transparent outline-none text-sm"
+            value={search}
+            onChange={(e) => dispatch(setSearchSnippet(e.target.value))}
+            className="w-full bg-transparent outline-none text-sm text-black"
           />
         </div>
         <button

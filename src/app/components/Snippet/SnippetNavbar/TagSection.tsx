@@ -6,13 +6,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TagModal from "../../Modals/TagModel";
 import { useTags } from "@/hooks/useTags";
+import { setFilterSnippetByTag } from "@/redux/features/searchSnippet";
 
 const TagSection = () => {
   const dispatch = useDispatch();
   const tagModalState = useSelector(
     (state: RootState) => state.allModal.tagModal
   );
-  const [selectedTag, setSelectedTag] = useState<string>("All");
+  const [selectedTag, setSelectedTag] = useState<string>("");
   const {
     isErrorTagsByCurrentUserId,
     isLoadingTagsByCurrentUserId,
@@ -27,7 +28,7 @@ const TagSection = () => {
 
   const tagArray: { id: string; name: string }[] = [
     {
-      id: "1",
+      id: "",
       name: "All",
     },
     ...tags,
@@ -54,10 +55,13 @@ const TagSection = () => {
               </>
             ) : (
               <button
-                onClick={() => setSelectedTag(item?.name)}
+                onClick={() => {
+                  dispatch(setFilterSnippetByTag(item?.id));
+                  setSelectedTag(item?.id);
+                }}
                 key={index}
                 className={`p-2 rounded-md ${
-                  selectedTag === item?.name
+                  selectedTag === item?.id
                     ? "bg-purple-500 text-white"
                     : "text-neutral-500"
                 }  flex items-center gap-1 text-xs`}
