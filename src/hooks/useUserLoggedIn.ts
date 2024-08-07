@@ -5,6 +5,7 @@ import { API_ENDPOINT } from "@/types/RegisterUserTypes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const useUserLoggedIn = () => {
   const router = useRouter();
@@ -19,6 +20,10 @@ export const useUserLoggedIn = () => {
     mutationFn: userLoggedIn,
     onSuccess: () => {
       router.push("/all-code-snippets");
+      toast.success("Logged in successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
   return {

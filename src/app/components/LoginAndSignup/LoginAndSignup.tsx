@@ -64,7 +64,7 @@ const LoginAndSignup = () => {
                 Please enter your details !
               </p>
             </div>
-            <button className="w-full p-2 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
+            <button className="w-full p-2 text-neutral-800 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
               Login with Google
             </button>
             <div className="w-full flex gap-2 items-center">

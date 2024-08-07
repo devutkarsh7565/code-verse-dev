@@ -23,4 +23,7 @@ export interface RegisterUserData {
   password: string;
 }
 
-export const API_ENDPOINT = "http://localhost:4000/api/v1";
+// export const API_ENDPOINT = "http://localhost:4000/api/v1";
+
+export const API_ENDPOINT =
+  "https://code-snippet-backend-2wx1.onrender.com/api/v1";
