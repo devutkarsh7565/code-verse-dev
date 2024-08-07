@@ -1,4 +1,5 @@
 "use client";
+import { useUserLoggedIn } from "@/hooks/useUserLoggedIn";
 import {
   ArrowLeftStartOnRectangleIcon,
   CodeBracketSquareIcon,
@@ -10,7 +11,13 @@ import React from "react";
 
 const LinksComponents = () => {
   const pathname = usePathname();
-  const links: { title: string; href: string; icon: JSX.Element }[] = [
+
+  const links: {
+    title: string;
+    href: string;
+    icon: JSX.Element;
+    onClick?: () => void;
+  }[] = [
     {
       title: "All Snippets",
       href: "/all-code-snippets",
@@ -44,6 +51,7 @@ const LinksComponents = () => {
       <h1 className="text-sm font-medium text-neutral-500 mb-2">Quick Links</h1>
       {links?.map((item) => (
         <Link
+          onClick={item?.onClick}
           className={`w-34/5 text-sm px-4 py-2 rounded-md flex gap-2 items-center ${
             pathname === item?.href || pathname.startsWith(item?.href)
               ? "text-purple-50 bg-purple-500"

@@ -8,20 +8,13 @@ import { useDemo } from "@/hooks/useDemo";
 import { RootState } from "@/redux/store";
 import { DemoSchema, IDemoSchema } from "@/schemas/demoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 const AllCodeSnippet = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<IDemoSchema>({ resolver: zodResolver(DemoSchema) });
-
-  // const onSubmit: SubmitHandler<IDemoSchema> = (data) => {
-  //   console.log(data, "data");
-  // };
+  const router = useRouter();
 
   const { currentUser, isErrorCurrentUser, isLoadingCurrentUser } =
     useCurrentUser();
@@ -31,6 +24,10 @@ const AllCodeSnippet = () => {
   const addSnippetState = useSelector(
     (state: RootState) => state.addSnippet.addSnippet
   );
+
+  if (!currentUser) {
+    router.push("/login");
+  }
 
   return (
     <div className="w-full h-full flex gap-4">

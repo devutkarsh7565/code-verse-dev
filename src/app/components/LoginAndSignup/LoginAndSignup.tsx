@@ -8,11 +8,13 @@ import { ISignupSchema, signupSchema } from "@/schemas/signupSchema";
 import { useRegister } from "@/hooks/useRegister";
 import { useUserLoggedIn } from "@/hooks/useUserLoggedIn";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const LoginAndSignup = () => {
   const [isLoginComponent, setIsLoginComponent] = useState<boolean>(true);
 
   const router = useRouter();
+
   const {
     registerMutate,
     isErrorRegister,
@@ -47,13 +49,12 @@ const LoginAndSignup = () => {
     await registerMutate(data);
   };
 
-  console.log(registerData, "registerData");
   if (isLoginComponent) {
     return (
       <>
         <form
           onSubmit={loginForm.handleSubmit(onLogin)}
-          className="h-full w-full flex items-center justify-center"
+          className="h-full w-full flex items-center justify-center text-black"
         >
           <div className="flex flex-col gap-6 w-3/5">
             <div className="flex flex-col gap-2">

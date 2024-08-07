@@ -26,16 +26,67 @@ export const useUserLoggedIn = () => {
       toast.error(error.message);
     },
   });
+
+  const {
+    mutate: logoutMutate,
+    isPending: isLoadingLogout,
+    isSuccess: isSuccessLogout,
+    isError: isErrorLogout,
+    data: logoutData,
+  } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      router.push("/");
+      toast.success("Logged out successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
   return {
     loggedInData,
     loggedInMutate,
     isErrorLoggedIn,
     isLoadingLoggedIn,
     isSuccessLoggedIn,
+    logoutData,
+    logoutMutate,
+    isErrorLogout,
+    isLoadingLogout,
+    isSuccessLogout,
   };
 };
 
 const API_URL = `${API_ENDPOINT}/users/login/`;
+
+const LOGOUT_API_URL = `${API_ENDPOINT}/users/logout/`;
+
+const logoutUser = async () => {
+  try {
+    const accessToken = JSON.parse(localStorage.getItem("accessToken") || "{}");
+    await axios.put(
+      LOGOUT_API_URL,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    localStorage.removeItem("accessToken");
+  } catch (error) {
+    // Handle error accordingly
+    if (axios.isAxiosError(error)) {
+      console.error("Axios error:", error.message);
+      // You can also handle different error responses based on status codes
+    } else {
+      console.error("Unexpected error:", error);
+    }
+    throw error;
+  }
+};
 
 export const userLoggedIn = async (
   userData: ILoginSchema
