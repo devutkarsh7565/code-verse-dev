@@ -7,13 +7,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ISignupSchema, signupSchema } from "@/schemas/signupSchema";
 import { useRegister } from "@/hooks/useRegister";
 import { useUserLoggedIn } from "@/hooks/useUserLoggedIn";
-import { useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import {
+  loginComponentOpen,
+  signUpComponentOpen,
+} from "@/redux/features/signUpAndLogin";
 
 const LoginAndSignup = () => {
-  const [isLoginComponent, setIsLoginComponent] = useState<boolean>(true);
-
-  const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoginComponent = useSelector(
+    (state: RootState) => state.signUpAndLogin.isLoginComponent
+  );
 
   const {
     registerMutate,
@@ -65,14 +70,14 @@ const LoginAndSignup = () => {
                 Please enter your details !
               </p>
             </div>
-            <button className="w-full p-2 text-neutral-800 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
+            {/* <button className="w-full p-2 text-neutral-800 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
               Login with Google
-            </button>
-            <div className="w-full flex gap-2 items-center">
+            </button> */}
+            {/* <div className="w-full flex gap-2 items-center">
               <div className="w-[46%] border border-neutral-200"></div>
               <h4>or</h4>
               <div className="w-[46%] border border-neutral-200"></div>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-6 w-full">
               <FormControl
                 error={loginForm.formState.errors?.email}
@@ -111,7 +116,7 @@ const LoginAndSignup = () => {
               <div className="flex items-center w-full justify-center text-sm text-neutral-500">
                 Don&t have any account ? {"  "}
                 <span
-                  onClick={() => setIsLoginComponent(false)}
+                  onClick={() => dispatch(signUpComponentOpen())}
                   className="text-black ml-1 cursor-pointer hover:underline duration-300"
                 >
                   Sign up for free
@@ -130,7 +135,7 @@ const LoginAndSignup = () => {
           className="h-full w-full flex items-center justify-center"
         >
           <div className="flex flex-col gap-6 w-3/5">
-            <div className="flex flex-col gap-2 w-full items-center">
+            <div className="flex flex-col gap-2 w-full items-center text-black">
               <h2 className="text-3xl font-semibold tracking-wide">
                 Create your account
               </h2>
@@ -138,14 +143,14 @@ const LoginAndSignup = () => {
                 Let get started with your 30 days free trial
               </p>
             </div>
-            <button className="w-full p-2 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
+            {/* <button className="w-full p-2 flex justify-center text-sm border border-neutral-300 hover:bg-slate-50 duration-300 bg-slate-100 rounded-lg">
               Login with Google
-            </button>
-            <div className="w-full flex gap-2 items-center">
+            </button> */}
+            {/* <div className="w-full flex gap-2 items-center">
               <div className="w-[46%] border border-neutral-200"></div>
               <h4>or</h4>
               <div className="w-[46%] border border-neutral-200"></div>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-3 w-full">
               <FormControl
                 register={signupForm.register}
@@ -194,7 +199,7 @@ const LoginAndSignup = () => {
               <div className="flex items-center w-full justify-center text-sm text-neutral-500">
                 Already have any account ? {"  "}
                 <span
-                  onClick={() => setIsLoginComponent(true)}
+                  onClick={() => dispatch(loginComponentOpen())}
                   className="text-green-600 ml-1 cursor-pointer hover:underline duration-300"
                 >
                   Sign in

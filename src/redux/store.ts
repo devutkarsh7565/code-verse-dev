@@ -3,6 +3,7 @@ import counterReducer from "@/redux/features/demo";
 import allModalReducer from "@/redux/features/allModal";
 import addSnippetReducer from "@/redux/features/addSnippet";
 import searchSnippetReducer from "@/redux/features/searchSnippet";
+import signUpAndLoginReducer from "@/redux/features/signUpAndLogin";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     allModal: allModalReducer,
     addSnippet: addSnippetReducer,
     searchSnippet: searchSnippetReducer,
+    signUpAndLogin: signUpAndLoginReducer,
   },
 });
 
